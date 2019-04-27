@@ -51,14 +51,7 @@ new Vue({
                             this.loading.close(); //关闭动画加载
                         } else {
                             // 弹出错误信息框
-                            this.$emit(
-                                'submit-form',
-                                this.$message({
-                                    message: result.body.msg,
-                                    type: 'warning',
-                                    duration: 6000
-                                }),
-                            );
+
                             // 清空表单状态
                             this.$refs[login].resetFields();
                         }
@@ -70,7 +63,7 @@ new Vue({
                             message: '输入信息有误！',
                             type: 'warning',
                             duration: 6000
-                        }),
+                        })
                     );
                     return false;
                 }

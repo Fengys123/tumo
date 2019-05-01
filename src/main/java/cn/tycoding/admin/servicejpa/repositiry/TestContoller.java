@@ -14,7 +14,6 @@ public class TestContoller
     public void test1()
     {
         //System.out.println(articleCategoryRepository.findAll().toString());
-        System.out.println(articleCategoryRepository.findArticleCategoryById(5L));
         System.out.println(articleCategoryRepository.findArticleCategoryByArticleIdAndAndCategoryId(24L,26L));
         if(articleCategoryRepository.existsArticleCategoriesByArticleIdAndAndCategoryId(24L,26L))
         {

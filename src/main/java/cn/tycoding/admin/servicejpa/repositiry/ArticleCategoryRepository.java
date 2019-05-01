@@ -11,9 +11,6 @@ import java.util.List;
  */
 public interface ArticleCategoryRepository extends JpaRepository<ArticleCategory,Long>
 {
-    //通过ID获取ArticleCategory
-    List<ArticleCategory> findArticleCategoryById(long Id);
-
     List<ArticleCategory> findArticleCategoryByArticleIdAndAndCategoryId(long articleId, long categoryId);
 
     Boolean existsArticleCategoriesByArticleIdAndAndCategoryId(long articleId, long categoryId);

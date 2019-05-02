@@ -14,4 +14,8 @@ public interface ArticleCategoryRepository extends JpaRepository<ArticleCategory
     List<ArticleCategory> findArticleCategoryByArticleIdAndAndCategoryId(long articleId, long categoryId);
 
     Boolean existsArticleCategoriesByArticleIdAndAndCategoryId(long articleId, long categoryId);
+
+    void deleteArticleCategoriesByArticleId(long articleId);
+
+    void deleteArticleCategoriesByCategoryId(long categoryId);
 }

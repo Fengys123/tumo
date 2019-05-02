@@ -7,6 +7,7 @@ import cn.tycoding.admin.service.ArticleCategoryService;
 import cn.tycoding.admin.servicejpa.ArticleCategoryJpaService;
 import cn.tycoding.admin.servicejpa.repositiry.ArticleCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,16 +25,24 @@ public class ArticleCategoryJpaServiceImpl implements ArticleCategoryJpaService
     @Autowired
     private ArticleCategoryRepository articleCategoryRepository;
 
+    /**
+     * should never be used
+     */
     @Override
-    @Deprecated
     public Long findAllCount() {
-        return null;
+        if (findAll() == null)
+        {
+            return 0L;
+        }
+        return ((long) findAll().size());
     }
 
+    /**
+     * should never be used
+     */
     @Override
-    @Deprecated
     public List<ArticleCategory> findAll() {
-        return null;
+        return articleCategoryRepository.findAll();
     }
 
     @Override
@@ -43,16 +52,19 @@ public class ArticleCategoryJpaServiceImpl implements ArticleCategoryJpaService
     }
 
     @Override
-    @Deprecated
     public ArticleCategory findById(Long id) {
-        return null;
+        return articleCategoryRepository.findById(id).get();
     }
 
     @Override
+    @Modifying
     @Transactional
     public void save(ArticleCategory articleCategory) {
         if(!exists(articleCategory)) {
             articleCategoryRepository.save(articleCategory);
+        }
+        else {
+            throw new GlobalException("articleCategory is not exist!!!");
         }
     }
 
@@ -64,32 +76,42 @@ public class ArticleCategoryJpaServiceImpl implements ArticleCategoryJpaService
         return articleCategoryRepository.existsArticleCategoriesByArticleIdAndAndCategoryId(articleCategory.getArticleId(), articleCategory.getCategoryId());
     }
 
-    @Deprecated
-    protected boolean exists(Optional<ArticleCategory> articleCategory){
-        return false;
-    }
-
-
-
     @Override
-    @Deprecated
+    @Modifying
     public void update(ArticleCategory articleCategory) {
+        if (articleCategory != null)
+        {
+            articleCategoryRepository.save(articleCategory);
+        }
+        else
+        {
+            throw new GlobalException("Save articleCategory failed!!!");
+        }
     }
 
     @Override
-    @Deprecated
     public void delete(Long... ids) {
+        for (Long id : ids)
+        {
+            articleCategoryRepository.deleteById(id);
+        }
     }
 
     @Override
     @Transactional
-    @Deprecated
     public void deleteByArticleId(Long id) {
+        if (id != null) {
+            throw new GlobalException("id is null!!!");
+        }
+        articleCategoryRepository.deleteArticleCategoriesByArticleId(id);
     }
 
     @Override
     @Transactional
-    @Deprecated
     public void deleteByCategoryId(Long id) {
+        if (id != null) {
+            throw new GlobalException("id is null!!!");
+        }
+        articleCategoryRepository.deleteArticleCategoriesByCategoryId(id);
     }
 }

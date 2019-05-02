@@ -2,8 +2,6 @@ package cn.tycoding.admin.servicejpa.impl;
 
 import cn.tycoding.admin.entity.ArticleCategory;
 import cn.tycoding.admin.exception.GlobalException;
-import cn.tycoding.admin.mapper.ArticleCategoryMapper;
-import cn.tycoding.admin.service.ArticleCategoryService;
 import cn.tycoding.admin.servicejpa.ArticleCategoryJpaService;
 import cn.tycoding.admin.servicejpa.repositiry.ArticleCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @auther Fys
@@ -78,8 +75,9 @@ public class ArticleCategoryJpaServiceImpl implements ArticleCategoryJpaService
 
     @Override
     @Modifying
+    @Transactional
     public void update(ArticleCategory articleCategory) {
-        if (articleCategory != null)
+        if (exists(articleCategory))
         {
             articleCategoryRepository.save(articleCategory);
         }
